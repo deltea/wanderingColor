@@ -5,8 +5,11 @@ let x;
 let y;
 let circleSize = 0;
 let mode = "colors";
-let modes = ["colors", "whiteStroke", "blackStroke"];
+let modes = ["colors", "whiteStroke", "blackStroke", "squareBackground", "circleBackground", "party"];
 let modeIndex = 0;
+let circleSizeIncrement = 0.5;
+let sizeIncrementDir = true;
+let circleMaxSize = 200;
 
 // Create circle
 function createCircle(color, tele, num1, num2) {
@@ -21,6 +24,23 @@ function createCircle(color, tele, num1, num2) {
 
   // Draw an ellipse with the variables for x and y passed in
   circle(x, y, circleSize);
+}
+
+// Create background
+function createBackground(shapeSizeParam, marginParam, shape = "square") {
+  fill(0);
+  noStroke();
+  let shapeSize = shapeSizeParam;
+  let margin = marginParam;
+  for (var x = 0; x < windowWidth; x += shapeSize + margin) {
+    for (var y = 0; y < windowHeight; y += shapeSize + margin) {
+      if (shape === "square") {
+        square(x, y, shapeSize);
+      } else {
+        circle(x, y, shapeSize);
+      }
+    }
+  }
 }
 
 // Setup
@@ -40,18 +60,35 @@ function draw() {
   // Settings
   switch (mode) {
     case "colors":
+      circleSizeIncrement = 0.5;
       noStroke();
       break;
     case "blackStroke":
+      circleSizeIncrement = 0.5;
       stroke(0);
       break;
     case "whiteStroke":
+      circleSizeIncrement = 0.5;
       stroke(255);
+      break;
+    case "squareBackground":
+      circleSizeIncrement = 0.5;
+      createBackground(10, 1);
+      break;
+    case "circleBackground":
+      circleSizeIncrement = 0.5;
+      createBackground(10, 1, "circle");
+      break;
+    case "party":
+      circleSizeIncrement = 8.7;
       break;
   }
 
   // Increment circle size
-  circleSize += 0.1;
+  circleSize += sizeIncrementDir ? circleSizeIncrement : -circleSizeIncrement;
+  if (circleSize >= circleMaxSize || circleSize <= 0) {
+    sizeIncrementDir = !sizeIncrementDir;
+  }
 
   // Create circle
   for (var i = 0; i < colors.length; i++) {
@@ -79,4 +116,11 @@ function mousePressed() {
     modeIndex = 0;
   }
   mode = modes[modeIndex];
+  if (mode === "party") {
+    document.getElementById("audio").play();
+    circleSize = 10;
+  } else {
+    document.getElementById("audio").pause();
+    document.getElementById("audio").currentTime = 0;
+  }
 }
