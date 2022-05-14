@@ -5,7 +5,7 @@ let x;
 let y;
 let circleSize = 0;
 let mode = "colors";
-let modes = ["colors", "whiteStroke", "blackStroke", "squareBackground", "circleBackground", "party"];
+let modes = ["colors", "whiteStroke", "blackStroke", "squareBackground", "circleBackground", "noReset", "colorBubbles", "party"];
 let modeIndex = 0;
 let circleSizeIncrement = 0.5;
 let sizeIncrementDir = true;
@@ -55,32 +55,43 @@ function setup() {
 // Draw
 function draw() {
   // Reset background
-  background(0, 18);
 
   // Settings
   switch (mode) {
     case "colors":
+      background(0, 18);
       circleSizeIncrement = 0.5;
       noStroke();
       break;
     case "blackStroke":
+      background(0, 18);
       circleSizeIncrement = 0.5;
       stroke(0);
       break;
     case "whiteStroke":
+      background(0, 18);
       circleSizeIncrement = 0.5;
       stroke(255);
       break;
     case "squareBackground":
+      background(0, 18);
       circleSizeIncrement = 0.5;
       createBackground(10, 1);
       break;
     case "circleBackground":
+      background(0, 18);
       circleSizeIncrement = 0.5;
       createBackground(10, 1, "circle");
       break;
+    case "noReset":
+      circleSizeIncrement = 0.5;
+      break;
     case "party":
+      background(0, 18);
       circleSizeIncrement = 8.7;
+      break;
+    case "colorBubbles":
+      circleSizeIncrement = 40;
       break;
   }
 
