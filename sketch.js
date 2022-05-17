@@ -11,6 +11,20 @@ let circleSizeIncrement = 0.5;
 let sizeIncrementDir = true;
 let circleMaxSize = 200;
 
+// Download screenshot
+async function downloadImage(imageSrc) {
+  const image = await fetch(imageSrc);
+  const imageBlog = await image.blob();
+  const imageURL = URL.createObjectURL(imageBlog);
+
+  const link = document.createElement("a");
+  link.href = imageURL;
+  link.download = "wandering-color-screenshot";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
 // Create circle
 function createCircle(color, tele, num1, num2) {
   x = width * noise(tele + num1);

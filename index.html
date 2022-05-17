@@ -7,10 +7,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.min.js"></script>
   </head>
   <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="sketch.js"></script>
     <audio id="audio">
       <source src="partyMusic.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
+    <script type="text/javascript">
+      document.addEventListener("keydown", (e) => {
+        if (e.code === "KeyS" || e.code === "Space") {
+          html2canvas(document.body).then((canvas) => {
+            const base64URL = canvas.toDataURL("image/png");
+            let a = document.createElement("a");
+            a.href = base64URL;
+            a.download = "wandering-color-screenshot";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          });
+        }
+      });
+    </script>
   </body>
 </html>
