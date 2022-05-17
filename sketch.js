@@ -5,7 +5,7 @@ let x;
 let y;
 let circleSize = 0;
 let mode = "colors";
-let modes = ["colors", "whiteStroke", "blackStroke", "squareBackground", "circleBackground", "noReset", "colorBubbles", "party"];
+let modes = ["colors", "whiteStroke", "blackStroke", "squareBackground", "circleBackground", "noReset", "colorBubbles", "mic", "party"];
 let modeIndex = 0;
 let circleSizeIncrement = 0.5;
 let sizeIncrementDir = true;
@@ -106,6 +106,13 @@ function draw() {
       break;
     case "colorBubbles":
       circleSizeIncrement = 40;
+      break;
+    case "mic":
+      navigator.mediaDevices.getUserMedia({video: false, audio: true}).then(stream => {
+        window.localStream = stream;
+        window.localAudio.srcObject = stream;
+        window.localAudio.autoplay = true;
+      });
       break;
   }
 
