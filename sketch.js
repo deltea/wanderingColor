@@ -108,11 +108,7 @@ function draw() {
       circleSizeIncrement = 40;
       break;
     case "mic":
-      navigator.mediaDevices.getUserMedia({video: false, audio: true}).then(stream => {
-        window.localStream = stream;
-        window.localAudio.srcObject = stream;
-        window.localAudio.autoplay = true;
-      });
+      navigator.mediaDevices.getUserMedia({video: false, audio: true});
       break;
   }
 
@@ -154,5 +150,23 @@ function mousePressed() {
   } else {
     document.getElementById("audio").pause();
     document.getElementById("audio").currentTime = 0;
+    if (mode === "mic") {
+      navigator.mediaDevices.getUserMedia({video: false, audio: true}).then((stream) => {
+        const audio = new AudioContext();
+        const analyser = audio.createAnalyser();
+        const microphone = audio.createMediaStreamSource(stream);
+        const scriptProcessor = audio.createScriptProcessor(2048, 1, 1);
+        microphone.connect(analyser);
+        analyser.connect(scriptProcessor);
+        scriptProcessor.connect(audio.destination);
+        scriptProcessor.onaudioprocess = () => {
+          const array = new Uint8Array(analyser.frequencyBinCount);
+          analyser.getByteFrequencyData(array);
+          const arraySum = array.reduce((a, value) => a + value, 0);
+          const average = arraySum / array.length;
+          console.log(Math.round(average));
+        }
+      });
+    }
   }
 }
