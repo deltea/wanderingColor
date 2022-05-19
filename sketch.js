@@ -95,7 +95,7 @@ function draw() {
     case "circleBackground":
       background(0, 18);
       circleSizeIncrement = 0.5;
-      createBackground(10, 1, "circle");
+      createBackground(10, 0, "circle");
       break;
     case "noReset":
       circleSizeIncrement = 0.5;
