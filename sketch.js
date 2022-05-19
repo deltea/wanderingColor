@@ -81,11 +81,13 @@ function draw() {
       background(0, 18);
       circleSizeIncrement = 0.5;
       stroke(0);
+      strokeWeight(4);
       break;
     case "whiteStroke":
       background(0, 18);
       circleSizeIncrement = 0.5;
       stroke(255);
+      strokeWeight(4);
       break;
     case "squareBackground":
       background(0, 18);
