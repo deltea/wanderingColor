@@ -68,8 +68,6 @@ function setup() {
 
 // Draw
 function draw() {
-  // Reset background
-
   // Settings
   switch (mode) {
     case "colors":
@@ -155,5 +153,8 @@ function mousePressed() {
   } else {
     document.getElementById("audio").pause();
     document.getElementById("audio").currentTime = 0;
+    if (mode === "colorBubbles") {
+      background(0);
+    }
   }
 }
